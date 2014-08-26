@@ -1,15 +1,7 @@
 package com.teamalpha.endpoint;
 
-import com.teamalpha.datastore.*;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.google.api.server.spi.config.Api;
-import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.config.Named;
-import com.google.api.server.spi.response.NotFoundException;
-
-@Api(name="quoteapi",version="v1", description="An API to manage famous quotes")
+//@Api(name="quoteapi",version="v1", description="An API to manage famous quotes")
 public class QuoteServiceAPI {
 
 //	public static List<Quote> quotes = new ArrayList<Quote>();
