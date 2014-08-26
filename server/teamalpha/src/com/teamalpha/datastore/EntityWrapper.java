@@ -31,7 +31,7 @@ public abstract class EntityWrapper {
             return KeyFactory.keyToString(this.entity.getKey());
     }
    
-    public abstract String xml();
+    
    
 }
 

@@ -56,22 +56,24 @@ public class Patient extends EntityWrapper {
     public void setCaretakersPhone(String value) {
         super.set("caretakers_phone", value);
     }
- 
-    @Override
-    public String xml() {
-        String xml = "<patient>";
-        xml += "<key>" + super.keyString() + "</key>";
-        xml += "<name>" + super.get("name") + "</name>";
-        xml += "<address>" + super.get("address") + "</address>";
-        xml += "<location>" + super.get("location") + "</location>";
-        xml += "<caretakers_name>" + super.get("caretakers_name") + "</caretakers_name>";
-        xml += "<caretakers_phone>" + super.get("caretakers_phone") + "</caretakers_phone>";
-        xml += "</patient>";
-        return xml;
-    }
         
     public PatientModel getModel() {
     	return new PatientModel(this);
+    }
+    
+    public void copyModel(PatientModel model) {
+    	if (model.getName() != null) {
+    		this.setName(model.getName());
+    	}
+    	if (model.getAddress() != null) {
+    		this.setAddress(model.getAddress());
+    	}
+    	if (model.getCareTakersName() != null) {
+    		this.setCaretakersName(model.getAddress());
+    	}
+    	if (model.getCareTakersPhone() != null) {
+    		this.setCaretakersPhone(model.getCareTakersPhone());
+    	}
     }
  
 }

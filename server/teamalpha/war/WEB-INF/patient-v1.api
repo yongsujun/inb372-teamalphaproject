@@ -25,7 +25,7 @@
   },
   "methods" : {
     "patient.get" : {
-      "path" : "get/{id}",
+      "path" : "patients/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -45,8 +45,24 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "patient.add" : {
+      "path" : "patients",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.teamalpha.endpoint.PatientServiceAPI.addPatient",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "patient.update" : {
-      "path" : "update",
+      "path" : "patients/{id}",
       "httpMethod" : "PUT",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -58,65 +74,17 @@
           "id" : {
             "type" : "string",
             "required" : true
-          },
-          "name" : {
-            "type" : "string",
-            "required" : false
-          },
-          "address" : {
-            "type" : "string",
-            "required" : false
-          },
-          "caretakersName" : {
-            "type" : "string",
-            "required" : false
-          },
-          "caretakersPhone" : {
-            "type" : "string",
-            "required" : false
           }
         },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "patient.add" : {
-      "path" : "add",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.teamalpha.endpoint.PatientServiceAPI.addPatient",
-      "request" : {
-        "parameters" : {
-          "name" : {
-            "type" : "string",
-            "required" : true
-          },
-          "address" : {
-            "type" : "string",
-            "required" : true
-          },
-          "caretakersName" : {
-            "type" : "string",
-            "required" : true
-          },
-          "caretakersPhone" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
       }
     },
     "patient.list" : {
-      "path" : "list",
+      "path" : "patients",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -188,14 +156,20 @@
           "$ref" : "PatientModel"
         }
       },
-      "com.teamalpha.endpoint.PatientServiceAPI.updatePatient" : {
-        "response" : {
-          "$ref" : "PatientModel"
-        }
-      },
       "com.teamalpha.endpoint.PatientServiceAPI.addPatient" : {
+        "request" : {
+          "$ref" : "PatientModel"
+        },
         "response" : {
           "$ref" : "AddResourceModel"
+        }
+      },
+      "com.teamalpha.endpoint.PatientServiceAPI.updatePatient" : {
+        "request" : {
+          "$ref" : "PatientModel"
+        },
+        "response" : {
+          "$ref" : "PatientModel"
         }
       },
       "com.teamalpha.endpoint.PatientServiceAPI.getAllPatients" : {

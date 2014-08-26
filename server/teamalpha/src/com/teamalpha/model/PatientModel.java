@@ -2,12 +2,17 @@ package com.teamalpha.model;
 
 import com.teamalpha.datastore.*;
 
+
 public class PatientModel {
 	String id;
 	String name;
 	String address;
 	String careTakersName;
 	String careTakersPhone;
+	
+	public PatientModel() {
+		
+	}
 	
 	public PatientModel(Patient patient) {
 		this.id = patient.getID();
@@ -19,10 +24,6 @@ public class PatientModel {
 
 	public String getId() {
 		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getName() {

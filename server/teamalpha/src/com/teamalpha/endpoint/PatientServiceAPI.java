@@ -11,19 +11,15 @@ import com.google.api.server.spi.response.NotFoundException;
 @Api(name="patient", version="v1")
 public class PatientServiceAPI {
 	
-	@ApiMethod(name="add", path="add", httpMethod = HttpMethod.POST)
-	public AddResourceModel addPatient(@Named("name") String name, @Named("address") String address,
-			@Named("caretakersName") String caretakersName, @Named("caretakersPhone") String caretakersPhone) {
-		Patient p = DatastoreManager.createPatient();
-		p.setName(name);
-		p.setAddress(address);
-		p.setCaretakersName(caretakersName);
-		p.setCaretakersPhone(caretakersPhone);
-		p.commit();
-		return new AddResourceModel(true, p.getID());
+	@ApiMethod(name="add", path="patients", httpMethod = HttpMethod.POST)
+	public AddResourceModel addPatient(PatientModel model) {
+		Patient patient = DatastoreManager.createPatient();
+		patient.copyModel(model);
+		patient.commit();
+		return new AddResourceModel(true, patient.getID());
 	}
 	
-	@ApiMethod(name="get", path="get/{id}")
+	@ApiMethod(name="get", path="patients/{id}", httpMethod = HttpMethod.GET)
 	public PatientModel getPatient(@Named("id") String id) throws NotFoundException {
 		Patient p = DatastoreManager.getPatient(id);
 		if (p == null) {
@@ -33,37 +29,19 @@ public class PatientServiceAPI {
 		}
 	}
 	
-	@ApiMethod(name="update", path="update", httpMethod = HttpMethod.PUT)
-	public PatientModel updatePatient(@Named("id") String id, @Named("name")@Nullable String name,
-															  @Named("address") @Nullable String address,
-															  @Named("caretakersName") @Nullable String caretakersName,
-															  @Named("caretakersPhone") @Nullable String caretakersPhone) throws NotFoundException {
-		
-		
-		Patient p = DatastoreManager.getPatient(id);
-		if (p == null) {
+	@ApiMethod(name="update", path="patients/{id}", httpMethod = HttpMethod.PUT)
+	public PatientModel updatePatient(@Named("id") String id, PatientModel model) throws NotFoundException {
+		Patient patient = DatastoreManager.getPatient(id);
+		if (patient == null) {
 			throw new NotFoundException("Patient not found");
 		} else {
-			if (name != null) {
-				p.setName(name);
-			}
-			if (address != null) {
-				p.setAddress(address);
-			}
-			if (caretakersName != null) {
-				p.setCaretakersName(caretakersName);
-			}
-			if (caretakersPhone != null) {
-				p.setCaretakersPhone(caretakersPhone);
-			}
-			
-			p.commit();
-			
-			return p.getModel();
+			patient.copyModel(model);
+			patient.commit();
+			return patient.getModel();
 		}
 	}
 	
-	@ApiMethod(name="list", path="list")
+	@ApiMethod(name="list", path="patients", httpMethod = HttpMethod.GET)
 	public List<PatientModel> getAllPatients() {
 		return DatastoreManager.getAllPatientModels();
 	}
