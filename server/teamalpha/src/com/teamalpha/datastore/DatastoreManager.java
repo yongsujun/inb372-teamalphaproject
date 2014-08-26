@@ -2,6 +2,7 @@ package com.teamalpha.datastore;
 
 import java.util.*;
 import com.google.appengine.api.datastore.*;
+import com.teamalpha.model.PatientModel;
  
 public class DatastoreManager {
       
@@ -24,7 +25,7 @@ public class DatastoreManager {
         return new Patient(entity);
     }
  
-        public static Patient getPatient(String keyString) {
+    public static Patient getPatient(String keyString) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity entity = null;
         Key key = null;
@@ -42,9 +43,9 @@ public class DatastoreManager {
         }
  
         return new Patient(entity);
-        }
+    }
  
-        public static List<Patient> getAllPatients() {
+    public static List<Patient> getAllPatients() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Query query = new Query(DatastoreManager.PATIENT_MODEL_STRING);
         PreparedQuery pq = datastore.prepare(query);
@@ -55,5 +56,18 @@ public class DatastoreManager {
                 patients.add(new Patient(entity));
         }
         return patients;
+    }
+    
+    public static List<PatientModel> getAllPatientModels() {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query(DatastoreManager.PATIENT_MODEL_STRING);
+        PreparedQuery pq = datastore.prepare(query);
+       
+        List<PatientModel> patients = new ArrayList<PatientModel>();
+       
+        for (Entity entity : pq.asIterable()) {  
+                patients.add(new Patient(entity).getModel());
         }
+        return patients;
+    }
 }

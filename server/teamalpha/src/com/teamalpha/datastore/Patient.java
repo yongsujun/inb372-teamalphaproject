@@ -70,7 +70,7 @@ public class Patient extends EntityWrapper {
         return xml;
     }
         
-    public PatientModel getResponseModel() {
+    public PatientModel getModel() {
     	return new PatientModel(this);
     }
  
