@@ -1,7 +1,7 @@
 package com.teamalpha.endpoint;
 
 import com.teamalpha.datastore.*;
-import com.teamalpha.responsemodel.*;
+import com.teamalpha.model.*;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.NotFoundException;
 
@@ -9,7 +9,7 @@ import com.google.api.server.spi.response.NotFoundException;
 public class PatientServiceAPI {
 	
 	@ApiMethod(name="add")
-	public AddResourceResponseModel addPatient(@Named("name") String name, @Named("address") String address,
+	public AddResourceModel addPatient(@Named("name") String name, @Named("address") String address,
 			@Named("caretakersName") String caretakersName, @Named("caretakersPhone") String caretakersPhone) {
 		Patient p = DatastoreManager.createPatient();
 		p.setName(name);
@@ -17,11 +17,11 @@ public class PatientServiceAPI {
 		p.setCaretakersName(caretakersName);
 		p.setCaretakersPhone(caretakersPhone);
 		p.commit();
-		return new AddResourceResponseModel(true, p.getID());
+		return new AddResourceModel(true, p.getID());
 	}
 	
 	@ApiMethod(name="get")
-	public PatientResponseModel getPatient(@Named("id") String id) throws NotFoundException {
+	public PatientModel getPatient(@Named("id") String id) throws NotFoundException {
 		Patient p = DatastoreManager.getPatient(id);
 		if (p == null) {
 			throw new NotFoundException("Patient not found");
@@ -29,6 +29,11 @@ public class PatientServiceAPI {
 			return p.getResponseModel();
 		}
 	}
+	/*
+	@ApiMethod(name="update")
+	public PatientResponseModel updatePatient() {
+		
+	} */
 	
 
 }

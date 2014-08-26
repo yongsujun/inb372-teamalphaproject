@@ -25,7 +25,7 @@
   },
   "methods" : {
     "patient.get" : {
-      "path" : "patientresponsemodel/{id}",
+      "path" : "patientmodel/{id}",
       "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
@@ -81,8 +81,8 @@
   },
   "descriptor" : {
     "schemas" : {
-      "PatientResponseModel" : {
-        "id" : "PatientResponseModel",
+      "PatientModel" : {
+        "id" : "PatientModel",
         "type" : "object",
         "properties" : {
           "id" : {
@@ -102,8 +102,8 @@
           }
         }
       },
-      "AddResourceResponseModel" : {
-        "id" : "AddResourceResponseModel",
+      "AddResourceModel" : {
+        "id" : "AddResourceModel",
         "type" : "object",
         "properties" : {
           "success" : {
@@ -121,12 +121,12 @@
     "methods" : {
       "com.teamalpha.endpoint.PatientServiceAPI.getPatient" : {
         "response" : {
-          "$ref" : "PatientResponseModel"
+          "$ref" : "PatientModel"
         }
       },
       "com.teamalpha.endpoint.PatientServiceAPI.addPatient" : {
         "response" : {
-          "$ref" : "AddResourceResponseModel"
+          "$ref" : "AddResourceModel"
         }
       }
     }

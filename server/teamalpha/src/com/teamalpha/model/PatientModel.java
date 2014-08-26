@@ -1,15 +1,15 @@
-package com.teamalpha.responsemodel;
+package com.teamalpha.model;
 
 import com.teamalpha.datastore.*;
 
-public class PatientResponseModel {
+public class PatientModel {
 	String id;
 	String name;
 	String address;
 	String careTakersName;
 	String careTakersPhone;
 	
-	public PatientResponseModel(Patient patient) {
+	public PatientModel(Patient patient) {
 		this.id = patient.getID();
 		this.name = patient.getName();
 		this.address = patient.getAddress();

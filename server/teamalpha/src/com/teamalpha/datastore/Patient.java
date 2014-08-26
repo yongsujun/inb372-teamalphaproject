@@ -1,7 +1,7 @@
 package com.teamalpha.datastore;
 
 import com.google.appengine.api.datastore.*;
-import com.teamalpha.responsemodel.PatientResponseModel;
+import com.teamalpha.model.PatientModel;
 
 public class Patient extends EntityWrapper {
  
@@ -70,8 +70,8 @@ public class Patient extends EntityWrapper {
         return xml;
     }
         
-    public PatientResponseModel getResponseModel() {
-    	return new PatientResponseModel(this);
+    public PatientModel getResponseModel() {
+    	return new PatientModel(this);
     }
  
 }

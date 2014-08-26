@@ -1,16 +1,16 @@
-package com.teamalpha.responsemodel;
+package com.teamalpha.model;
 
-public class AddResourceResponseModel {
+public class AddResourceModel {
 	boolean success;
 	String id;
 	String message;
 	
-	public AddResourceResponseModel(boolean success, String id) {
+	public AddResourceModel(boolean success, String id) {
 		this.success = success;
 		this.id = id;
 	}
 
-	public AddResourceResponseModel(boolean success, String id, String message) {
+	public AddResourceModel(boolean success, String id, String message) {
 		this.success = success;
 		this.id = id;
 		this.message = message;
