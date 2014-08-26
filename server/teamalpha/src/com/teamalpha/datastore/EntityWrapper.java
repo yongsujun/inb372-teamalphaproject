@@ -14,11 +14,11 @@ public abstract class EntityWrapper {
             this.entity = entity;
     }
    
-    public void set(String property, String value) {
+    protected void set(String property, String value) {
             this.entity.setProperty(property, value);
     }
    
-    public Object get(String property) {
+    protected Object get(String property) {
             return this.entity.getProperty(property);
     }
    

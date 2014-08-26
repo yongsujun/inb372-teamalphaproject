@@ -8,13 +8,12 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.NotFoundException;
-import com.teamalpha.datastore.Quote;
 
 @Api(name="quoteapi",version="v1", description="An API to manage famous quotes")
 public class QuoteServiceAPI {
 
 //	public static List<Quote> quotes = new ArrayList<Quote>();
-	
+	/*
 	@ApiMethod(name="add")
 	public Quote addQuote(@Named("name") String name) throws NotFoundException {
 		
@@ -25,11 +24,11 @@ public class QuoteServiceAPI {
 
 		//Quote q = new Quote(1, "author", "message");
 		//quotes.add(q);
-		//return p.getModel();
+		//return p.getModel();cccc
 		//return q;
 		return new Quote(1, "john doe", "something");
 	}
-/*
+
 	@ApiMethod(name="update")
 	public Quote updateQuote(Quote q) throws NotFoundException {
 		int index = quotes.indexOf(q);

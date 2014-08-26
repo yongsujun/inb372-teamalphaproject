@@ -3,19 +3,26 @@ package com.teamalpha.datastore;
 import java.util.*;
 import com.google.appengine.api.datastore.*;
  
-public class DatabaseManager {
-       
+public class DatastoreManager {
+      
+	public final static String PATIENT_MODEL_STRING = "Patient";
+	
 	public static Patient createPatient() {
-		return DatabaseManager.createPatient("");
+		return DatastoreManager.createPatient("");
 	}
 	
-       public static Patient createPatient(String name) {
-        	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        	Entity entity = new Entity("Employee");
-        	entity.setProperty("name", name);
-        	datastore.put(entity);
-        	return new Patient(entity);
-        }
+	/**
+	 * @todo Check if creation failed
+	 * @param name
+	 * @return
+	 */
+    public static Patient createPatient(String name) {
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity(DatastoreManager.PATIENT_MODEL_STRING);
+        entity.setProperty("name", name);
+        datastore.put(entity);
+        return new Patient(entity);
+    }
  
         public static Patient getPatient(String keyString) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -39,7 +46,7 @@ public class DatabaseManager {
  
         public static List<Patient> getAllPatients() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query query = new Query("Employee");
+        Query query = new Query(DatastoreManager.PATIENT_MODEL_STRING);
         PreparedQuery pq = datastore.prepare(query);
        
         List<Patient> patients = new ArrayList<Patient>();
