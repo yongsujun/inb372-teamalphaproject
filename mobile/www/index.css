@@ -1,0 +1,22 @@
+.important-msg {
+    text-align: center;
+}
+
+.center-div {
+    vertical-align:middle;
+}
+
+.input-feedback {
+    display: none;
+    color: red;
+}
+
+
+[data-role="footer"] {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+
+
