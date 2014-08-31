@@ -10,6 +10,7 @@ function getopenDB() {
         return undefined;   
     }
 }
+
 function getLocalStorage() {
     try {
         if(window.localStorage ) return window.localStorage;            
@@ -35,12 +36,4 @@ function prepareTable() {
 
 function getDB() {
     return prepareTable();
-}
-
-function getID() {
-    return getLocalStorage().getItem("id");
-}
-
-function setID(id) {
-    getLocalStorage().setItem("id", id);
 }
