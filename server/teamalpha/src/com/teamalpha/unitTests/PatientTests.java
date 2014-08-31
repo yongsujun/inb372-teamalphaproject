@@ -32,14 +32,12 @@ public class PatientTests {
 	
 	private final String testKeyActual = "agR0ZXN0cg0LEgdwYXRpZW50GAEM";
 	
-	private DatastoreManager manager;
 	private Patient testPatient;
 	private String testPatientKey;
 	
 	@Before
 	public void setUp() throws Exception {
-		helper.setUp();
-		manager = new DatastoreManager();
+		helper.setUp();();
 		testPatient = new Patient(new Entity("patient"));
 	}
 
@@ -130,9 +128,9 @@ public class PatientTests {
 	}
 	
 	private List<Patient> commitTwoPatients() {
-		manager.createPatient();
-		manager.createPatient();
-		List<Patient> patients = manager.getAllPatients();
+		DatastoreManager.createPatient();
+		DatastoreManager.createPatient();
+		List<Patient> patients = DatastoreManager.getAllPatients();
 		return patients;
 	}
 	
@@ -156,7 +154,7 @@ public class PatientTests {
 	public void test_ChangeNotCommitted() {
 		List<Patient> patients = commitTwoPatients();
 		patients.get(0).setName(PATIENT_NAME_SECOND);
-		List<Patient> patientsEdit = manager.getAllPatients();
+		List<Patient> patientsEdit = DatastoreManager.getAllPatients();
 		assertEquals("", patientsEdit.get(0).getName());
 	}
 	
@@ -164,7 +162,7 @@ public class PatientTests {
 	public void test_PatientKey_SetUpCorrectly() {
 		testPatient.commit();
 		testPatientKey = testPatient.getID();
-		Patient patient = manager.getPatient(testPatientKey);
+		Patient patient = DatastoreManager.getPatient(testPatientKey);
 		assertEquals(testPatient.getID(), patient.getID());
 	}
 
