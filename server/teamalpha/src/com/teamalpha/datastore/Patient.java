@@ -69,7 +69,7 @@ public class Patient extends EntityWrapper {
     		this.setAddress(model.getAddress());
     	}
     	if (model.getCareTakersName() != null) {
-    		this.setCaretakersName(model.getAddress());
+    		this.setCaretakersName(model.getCareTakersName());
     	}
     	if (model.getCareTakersPhone() != null) {
     		this.setCaretakersPhone(model.getCareTakersPhone());
