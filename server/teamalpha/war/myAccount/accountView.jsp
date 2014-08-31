@@ -1,3 +1,13 @@
+
+<%@ page import = "com.teamalpha.datastore.User" %>
+
+<%@ include file="/inc/session.jsp"%>
+<%
+User user = new User((String)session.getAttribute("userid"));
+String email = (String)session.getAttribute("userid");
+//Patient pt = new Patient();
+//String fullname = user.getFname();
+%>
 <jsp:include page="/inc/header.jsp" /> 
 <div class="container">
 
@@ -20,28 +30,21 @@
 	      <table class="table table-striped">
 	        <tr>
 	        	<td><strong>Name</strong></td>
-	        	<td>Tom Smith</td>	        	
+	        	<td><%=user.getFname()%> <%=user.getLname()%></td>	        	
 	        </tr>
 	        <tr>
 	        	<td><strong>Email</strong></td>
-	        	<td>tom@gmail.com</td>	        	
+	        	<td><%=user.getEmail()%></td>	        	
 	        </tr>
 	        <tr>
-		    	<td><strong>Address</strong></td>
-		    	<td>123 Queen St, Brisbane QLD 4000</td>	        	
+		    	<td><strong>Phoen</strong></td>
+		    	<td><%=user.getPhone()%></td>	        	
 		    </tr>
 		    <tr>
-		    	<td><strong>Phone</strong></td>
-		    	<td>07 3333 3333</td>	        	
+		    	<td><strong>Role</strong></td>
+		    	<td><%=user.getRole()%></td>	        	
 		    </tr>
-		    <tr>
-		    	<td><strong>####</strong></td>
-		    	<td>######</td>	        	
-		    </tr>
-		    <tr>
-		    	<td><strong>######</strong></td>
-		    	<td>########</td>	        	
-		    </tr>
+		    
 	      </table>
 
 	    </div>
