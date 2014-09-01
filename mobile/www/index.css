@@ -18,6 +18,9 @@
     width: 100%;
 }
 
+[data-role="footer"] button {
+    height: 32px;
+}
 
 #settings-page-reset {
     width: 100%;
@@ -25,4 +28,19 @@
     margin-left: 5px;
 }
 
+.main-page-footer-item-left {
+    float: left;
+}
+
+.main-page-footer-item-right {
+    float: right;
+}
+
+[src="map.html"] {
+    position: fixed;
+    top: 10%;
+    height: 80%;
+    left: 5%;
+    width: 90%;
+}
 

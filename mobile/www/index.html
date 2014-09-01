@@ -10,7 +10,9 @@
 		input, textarea  { -webkit-user-select:text; }
 		body { background-color:white; color:black }
 	</style>
+    <script src="xhr.js"></script>
 	<script src='intelxdk.js'></script>
+    <script src="cordova.js"></script>
 	<script type="text/javascript">
 		/* Intel native bridge is available */
 		var onDeviceReady=function(){
@@ -37,6 +39,11 @@
     
     <script src="jsaux/location.js"></script>
     <script src="jsaux/appsettings.js"></script>
+    <script src="jsaux/appengineendpoint.js"></script>
+    
+    <script src="lib/endpoint/client.js"></script>
+    
+ 
     
 </head>
 <body>
@@ -56,9 +63,21 @@
            <h1></h1>
             <a data-icon="gear" class="ui-btn-right" id="main-page-settings">Settings</a>
         </div>
+      
+        <div data-role="popup" id="popupBasic" style="display: inline-block;">
+	       <iframe src="map.html" ></iframe>
+            <!--sdfsd
+            <div id="map_canvas"></div>-->
+        </div>
+        
         
         <div data-role="footer">
-            Location: <span id="main-page-footer-location"></span>
+            <span class="main-page-footer-item-left">
+                Location: 
+                <br/>
+                <span id="main-page-footer-location">~</span>
+            </span>
+            <span class="main-page-footer-item-right"><a href="#popupBasic" id="mappopupbtn" data-rel="popup"><button id="main-page-view-map">View Map</button></a></span>
         </div>
     </div>
     <div data-role="page" id="settings-page">

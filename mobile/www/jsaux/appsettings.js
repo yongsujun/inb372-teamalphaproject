@@ -39,6 +39,26 @@ var AppSettings = (function() {
         localStorage.setItem("id", id);
     };
     
+    AppSettings.getPatientInfo = function() {
+        if (localStorage === null) {
+            localStorage = getLocalStorage();
+        }
+        if (localStorage === null) {
+            return null;    
+        }      
+        return localStorage.getItem("patient_info");
+    };
+    
+    AppSettings.setPatientInfo = function(patient) {
+        if (localStorage === null) {
+            localStorage = getLocalStorage();
+        }
+        if (localStorage === null) {
+            return null;    
+        }
+        localStorage.setItem("patient_info", patient);
+    };
+    
     AppSettings.hasUserID = function () {
         if (localStorage === null) {
             localStorage = getLocalStorage();
@@ -63,6 +83,7 @@ var AppSettings = (function() {
         }
         
         localStorage.removeItem("id");
+        localStorage.removeItem("patient_info");
     };
     
     
