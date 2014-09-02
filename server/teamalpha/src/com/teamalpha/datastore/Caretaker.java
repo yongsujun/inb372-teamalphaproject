@@ -2,6 +2,7 @@ package com.teamalpha.datastore;
 
 import com.google.appengine.api.datastore.*;
 import com.teamalpha.model.CaretakerModel;
+import com.teamalpha.datastore.Patient;
 
 public class Patient extends EntityWrapper {
 
