@@ -49,6 +49,18 @@ public class Patient extends EntityWrapper {
         super.set("email", value);
     }
     
+    public List<Patient> getPatients() {
+        return null;
+    }
+ 
+    public void addPatient(Patient patient) {
+        
+    }
+   
+    public void removePatient(Patient patient) {
+        
+    }
+    
     public CaretakerModel getModel() {
         return new CaretakerModel(this);
     }
