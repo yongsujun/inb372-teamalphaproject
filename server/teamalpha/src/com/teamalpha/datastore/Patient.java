@@ -2,6 +2,7 @@ package com.teamalpha.datastore;
 
 import com.google.appengine.api.datastore.*;
 import com.teamalpha.model.PatientModel;
+import com.teamalpha.datastore.Caretaker;
 
 public class Patient extends EntityWrapper {
  
@@ -41,20 +42,16 @@ public class Patient extends EntityWrapper {
         super.set("location", value.toString());
     }
    
-    public String getCaretakersName() {
-        return (String)super.get("caretakers_name");
+    public List<Caretaker> getCaretakers() {
+        return null;
     }
  
-    public void setCaretakersName(String value) {
-        super.set("caretakers_name", value);
+    public void addCaretaker(Caretaker carer) {
+        
     }
    
-    public String getCaretakersPhone() {
-        return (String)super.get("caretakers_phone");
-    }
- 
-    public void setCaretakersPhone(String value) {
-        super.set("caretakers_phone", value);
+    public void removeCaretaker(Caretaker carer) {
+        
     }
         
     public PatientModel getModel() {
