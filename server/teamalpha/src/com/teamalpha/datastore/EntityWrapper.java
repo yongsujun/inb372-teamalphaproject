@@ -1,5 +1,7 @@
 package com.teamalpha.datastore;
 
+import java.util.List;
+
 import com.google.appengine.api.datastore.*;
 
 public abstract class EntityWrapper {
@@ -20,6 +22,10 @@ public abstract class EntityWrapper {
     
     protected void set(String property, GeoPt value) {
             this.entity.setProperty(property, value);
+    }
+    
+    protected void set(String property, List<String> list) {
+    	this.entity.setProperty(property, list);
     }
    
     protected Object get(String property) {
