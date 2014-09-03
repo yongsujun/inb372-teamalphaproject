@@ -17,6 +17,10 @@ public abstract class EntityWrapper {
     protected void set(String property, String value) {
             this.entity.setProperty(property, value);
     }
+    
+    protected void set(String property, GeoPt value) {
+            this.entity.setProperty(property, value);
+    }
    
     protected Object get(String property) {
             return this.entity.getProperty(property);
