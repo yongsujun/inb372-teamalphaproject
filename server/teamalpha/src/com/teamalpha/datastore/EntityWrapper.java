@@ -1,6 +1,6 @@
 package com.teamalpha.datastore;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.google.appengine.api.datastore.*;
 
@@ -24,7 +24,7 @@ public abstract class EntityWrapper {
             this.entity.setProperty(property, value);
     }
     
-    protected void set(String property, List<String> list) {
+    protected void set(String property, ArrayList<String> list) {
     	this.entity.setProperty(property, list);
     }
    
