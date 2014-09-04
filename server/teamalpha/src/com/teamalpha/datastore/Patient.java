@@ -1,10 +1,15 @@
 package com.teamalpha.datastore;
 
 import com.google.appengine.api.datastore.*;
+
+import java.util.ArrayList;
+
 import com.teamalpha.model.PatientModel;
 import com.teamalpha.datastore.Caretaker;
 
 public class Patient extends EntityWrapper {
+	
+	private ArrayList<String> caretakers;
  
 	public Patient() {
     	super();
@@ -42,15 +47,30 @@ public class Patient extends EntityWrapper {
         super.set("location", value.toString());
     }
    
-    public List<Caretaker> getCaretakers() {
-        return null;
+    public ArrayList<String> getCaretakers() {
+        return (ArrayList<String>) super.get("caretakers");
+    }
+    
+    private void setCaretakers() {
+    	super.set("caretakers", this.caretakers);
     }
  
     public void addCaretaker(Caretaker carer) {
-        
+        this.caretakers = getCaretakers();
+        if (caretakers == null) {
+        	caretakers = new ArrayList<String>();
+        	caretakers.add(carer.getID());
+        } else {
+        	caretakers.add(carer.getID());
+        }
+        setCaretakers();
     }
    
     public void removeCaretaker(Caretaker carer) {
+        this.caretakers = getCaretakers();
+        if (!(caretakers == null)) {
+        	caretakers.remove(carer.getID());
+        }
         
     }
         
@@ -66,10 +86,10 @@ public class Patient extends EntityWrapper {
     		this.setAddress(model.getAddress());
     	}
     	if (model.getCareTakersName() != null) {
-    		this.setCaretakersName(model.getCareTakersName());
+    	//	this.setCaretakersName(model.getCareTakersName());
     	}
     	if (model.getCareTakersPhone() != null) {
-    		this.setCaretakersPhone(model.getCareTakersPhone());
+    	//	this.setCaretakersPhone(model.getCareTakersPhone());
     	}
     }
  

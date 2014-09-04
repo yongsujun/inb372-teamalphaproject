@@ -4,7 +4,6 @@ import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit;
 import static org.junit.Assert.*;
 
 import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,10 +24,6 @@ public class PatientTests {
 	
 	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 	
-	private final float LOWEST_LATITUDE = (float) -90.0;
-	private final float HIGHEST_LATITUDE = (float) 90.0;
-	private final float LOWEST_LONGITUDE = (float) -180.0;
-	private final float HIGHEST_LONGITUDE = (float) 180.0;
 	private final float MIDDLE_LATITUDE = (float) 0.0;
 	private final float MIDDLE_LONGITUDE = (float) 0.0;
 	
@@ -36,8 +31,6 @@ public class PatientTests {
 	private final String PATIENT_ADDRESS = "123 Fake St, Fakeville";
 	private final GeoPt PATIENT_LOCATION = new GeoPt(MIDDLE_LATITUDE, MIDDLE_LONGITUDE);
 	private final String PATIENT_NAME_SECOND = "Bob Brown";
-	
-	private final String testKeyActual = "agR0ZXN0cg0LEgdwYXRpZW50GAEM";
 	
 	private Caretaker caretaker;
 	private Patient testInstance;
@@ -79,7 +72,9 @@ public class PatientTests {
 	
 	@Test
 	public void test_GetCaretakers_InitiallyNoCaretakers() {
-		assertEquals(0, testInstance.getCaretakers().size());
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(null, storedTestInstance.getCaretakers());
 	}
 	
 	@Test
@@ -107,17 +102,22 @@ public class PatientTests {
 		caretaker.commit();
 		testInstance.addCaretaker(caretaker);
 		testInstance.commit();
-		assertEquals(1, testInstance.getCaretakers().size());
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(1, storedTestInstance.getCaretakers().size());
 	}
 	
 	@Test
-	public void test_RemoveCaretaker_RemoveOne() {
+	public void test_RemoveCaretaker_OnlyCaretakerRemoved() {
 		caretaker = new Caretaker(new Entity("caretaker"));
 		caretaker.commit();
 		testInstance.addCaretaker(caretaker);
 		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(1, storedTestInstance.getCaretakers().size());
 		testInstance.removeCaretaker(caretaker);
-		assertEquals(0, testInstance.getCaretakers().size());
+		testInstance.commit();
+		storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(null, storedTestInstance.getCaretakers());
 	}
 	
 	// helper method to commit two caretakers to the datastore
@@ -131,10 +131,24 @@ public class PatientTests {
 	@Test
 	public void test_AddCaretaker_MultipleCaretakers() {
 		List<Caretaker> caretakers = addTwoCaretakers();
-		testInstance.addCaretaker(caretakers(0));
-		testInstance.addCaretaker(caretakers(1));
+		testInstance.addCaretaker(caretakers.get(0));
+		testInstance.addCaretaker(caretakers.get(1));
 		testInstance.commit();
-		assertEquals(2, testInstance.getCaretakers().size());
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(2, storedTestInstance.getCaretakers().size());
+	}
+	
+	@Test
+	public void test_RemoveCaretaker_OneCaretakerFromTwo() {
+		List<Caretaker> caretakers = addTwoCaretakers();
+		testInstance.addCaretaker(caretakers.get(0));
+		testInstance.addCaretaker(caretakers.get(1));
+		testInstance.commit();
+		Patient test1 = DatastoreManager.getPatient(testInstance.getID());
+		test1.removeCaretaker(caretakers.get(0));
+		test1.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(1, storedTestInstance.getCaretakers().size());
 	}
 	
 	// helper method to commit two patients to the datastore

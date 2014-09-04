@@ -4,7 +4,7 @@ import com.google.appengine.api.datastore.*;
 import com.teamalpha.model.CaretakerModel;
 import com.teamalpha.datastore.Patient;
 
-public class Patient extends EntityWrapper {
+public class Caretaker extends EntityWrapper {
 
         public Caretaker() {
         super();
