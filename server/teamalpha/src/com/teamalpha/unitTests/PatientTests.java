@@ -1,6 +1,5 @@
 package com.teamalpha.unitTests;
 
-import static com.google.appengine.api.datastore.FetchOptions.Builder.withLimit;
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -9,13 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.GeoPt;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Query;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.teamalpha.datastore.*;
@@ -80,26 +73,31 @@ public class PatientTests {
 	@Test
 	public void test_SetNameCorrectly() {
 		testInstance.setName(PATIENT_NAME);
-		assertEquals(PATIENT_NAME, testInstance.getName());
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(PATIENT_NAME, storedTestInstance.getName());
 	}
 	
 	@Test
 	public void test_SetAddressCorrectly() {
 		testInstance.setAddress(PATIENT_ADDRESS);
-		assertEquals(PATIENT_ADDRESS, testInstance.getAddress());
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(PATIENT_ADDRESS, storedTestInstance.getAddress());
 	}
 	
 	@Test
 	public void test_SetLocationCorrectly() {
 		String expected = PATIENT_LOCATION.toString();
 		testInstance.setLocation(PATIENT_LOCATION);
-		assertEquals(expected, testInstance.getLocation());
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(expected, storedTestInstance.getLocation());
 	}
 	
 	@Test
 	public void test_AddCaretaker_OneCaretaker() {
-		caretaker = new Caretaker(new Entity("caretaker"));
-		caretaker.commit();
+		caretaker = DatastoreManager.createCaretaker();
 		testInstance.addCaretaker(caretaker);
 		testInstance.commit();
 		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
@@ -108,7 +106,7 @@ public class PatientTests {
 	
 	@Test
 	public void test_RemoveCaretaker_OnlyCaretakerRemoved() {
-		caretaker = new Caretaker(new Entity("caretaker"));
+		caretaker = DatastoreManager.createCaretaker();
 		caretaker.commit();
 		testInstance.addCaretaker(caretaker);
 		testInstance.commit();
@@ -144,9 +142,8 @@ public class PatientTests {
 		testInstance.addCaretaker(caretakers.get(0));
 		testInstance.addCaretaker(caretakers.get(1));
 		testInstance.commit();
-		Patient test1 = DatastoreManager.getPatient(testInstance.getID());
-		test1.removeCaretaker(caretakers.get(0));
-		test1.commit();
+		testInstance.removeCaretaker(caretakers.get(0));
+		testInstance.commit();
 		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
 		assertEquals(1, storedTestInstance.getCaretakers().size());
 	}
