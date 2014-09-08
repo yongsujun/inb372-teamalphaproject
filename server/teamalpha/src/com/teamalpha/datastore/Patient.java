@@ -39,12 +39,12 @@ public class Patient extends EntityWrapper {
 		return super.keyString();
 	}
 
-	public String getLocation() {
-		return (String) super.get("location");
+	public GeoPt getLocation() {
+		return (GeoPt) super.get("location");
 	}
 
 	public void setLocation(GeoPt value) {
-		super.set("location", value.toString());
+		super.set("location", value);
 	}
 
 	public ArrayList<String> getCaretakers() {
