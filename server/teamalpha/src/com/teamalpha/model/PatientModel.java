@@ -1,25 +1,26 @@
 package com.teamalpha.model;
 
+import com.google.appengine.api.datastore.GeoPt;
+import java.util.ArrayList;
 import com.teamalpha.datastore.*;
-
 
 public class PatientModel {
 	String id;
 	String name;
 	String address;
-	String careTakersName;
-	String careTakersPhone;
-	
+	String location;
+	ArrayList<String> caretakers = new ArrayList<String>();
+
 	public PatientModel() {
-		
+
 	}
-	
+
 	public PatientModel(Patient patient) {
 		this.id = patient.getID();
 		this.name = patient.getName();
 		this.address = patient.getAddress();
-		this.careTakersName = patient.getCaretakersName();
-		this.careTakersPhone = patient.getCaretakersPhone();
+		this.location = patient.getLocation();
+		this.caretakers.addAll(patient.getCaretakers());
 	}
 
 	public String getId() {
@@ -42,21 +43,20 @@ public class PatientModel {
 		this.address = address;
 	}
 
-	public String getCareTakersName() {
-		return careTakersName;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setCareTakersName(String careTakersName) {
-		this.careTakersName = careTakersName;
+	public void setLocation(GeoPt location) {
+		this.location = location.toString();
 	}
 
-	public String getCareTakersPhone() {
-		return careTakersPhone;
+	public ArrayList<String> getCaretakers() {
+		return caretakers;
 	}
 
-	public void setCareTakersPhone(String careTakersPhone) {
-		this.careTakersPhone = careTakersPhone;
+	public void setCaretakers(ArrayList<String> caretakers) {
+		this.caretakers = caretakers;
 	}
-	
-	
+
 }

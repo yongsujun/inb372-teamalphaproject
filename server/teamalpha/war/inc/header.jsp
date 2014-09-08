@@ -44,9 +44,12 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            
-            <li><a href="/login.jsp">Login</a></li>
-            <li><a href="../navbar-fixed-top/">Regist</a></li>
+            <%if((String)session.getAttribute("userid") == null || (String)session.getAttribute("userid") == ""){%>
+            <li><a href="/login.jsp">Log In</a></li>
+            <%}else{%>
+            <li><a href="/logout.jsp">Log Out</a></li>
+            <%}%>
+            <li><a href="/regist.jsp">Regist</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -1,3 +1,6 @@
+
+
+<%@ include file="/inc/session.jsp"%>
 <jsp:include page="/inc/header.jsp" /> 
 <div class="container">
 
