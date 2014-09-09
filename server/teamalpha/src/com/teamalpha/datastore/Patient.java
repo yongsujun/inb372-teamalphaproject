@@ -8,8 +8,6 @@ import com.teamalpha.datastore.Caretaker;
 
 public class Patient extends EntityWrapper {
 
-
-
 	public Patient() {
 		super();
 	}
@@ -45,8 +43,6 @@ public class Patient extends EntityWrapper {
 	public void setLocation(GeoPt value) {
 		super.set("location", value);
 	}
-
-
 	
 	public void setEmail(String email) {
 		super.set("email", email);
@@ -56,7 +52,37 @@ public class Patient extends EntityWrapper {
 		return (String) super.get("email");
 	}
 
-
+	public GeoPt getPointOne() {
+		return (GeoPt) super.get("Point One");
+	}
+	
+	public void setPointOne(GeoPt value) {
+		super.set("Point One", value);
+	}
+	
+	public GeoPt getPointTwo() {
+		return (GeoPt) super.get("Point Two");
+	}
+	
+	public void setPointTwo(GeoPt value) {
+		super.set("Point Two", value);
+	}
+	
+	public GeoPt getPointThree() {
+		return (GeoPt) super.get("Point Three");
+	}
+	
+	public void setPointThree(GeoPt value) {
+		super.set("Point Three", value);
+	}
+	
+	public GeoPt getPointFour() {
+		return (GeoPt) super.get("Point Four");
+	}
+	
+	public void setPointFour(GeoPt value) {
+		super.set("Point Four", value);
+	}
 
 	public PatientModel getModel() {
 		return new PatientModel(this);
