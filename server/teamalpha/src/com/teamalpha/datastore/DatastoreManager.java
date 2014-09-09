@@ -2,6 +2,7 @@ package com.teamalpha.datastore;
 
 import java.util.*;
 import com.google.appengine.api.datastore.*;
+import com.google.appengine.api.datastore.Query.*;
 import com.teamalpha.model.PatientModel;
 import com.teamalpha.model.CaretakerModel;
 
@@ -9,7 +10,15 @@ public class DatastoreManager {
 
 	public final static String PATIENT_MODEL_STRING = "Patient";
 	public final static String CARETAKER_MODEL_STRING = "Caretaker";
-
+	public final static String PATIENT_CARETAKER_MODEL_STRING = "PatientCaretaker";
+	
+	public final static int PATIENT_NOT_FOUND     = 101;
+	public final static int CARETAKER_NOT_FOUND   = 102;
+	
+	public final static int PATIENT_CARETAKER_ADDED = 401;
+	public final static int PATIENT_ALREADY_ADDED = 402;
+	
+	
 	public static Patient createPatient() {
 		return DatastoreManager.createPatient("");
 	}
@@ -146,4 +155,63 @@ public class DatastoreManager {
 		}
 		return caretakers;
 	}
+	
+	public static Caretaker getCaretakerByEmail(String email) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter filter = new FilterPredicate("email", FilterOperator.EQUAL, email);
+		Query q = new Query(DatastoreManager.CARETAKER_MODEL_STRING).setFilter(filter);
+		PreparedQuery pq = datastore.prepare(q);
+		for (Entity result : pq.asIterable()) {
+			return new Caretaker(result);
+		}
+		return null;
+	}
+
+	public static Patient getPatientByEmail(String email) {
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter filter = new FilterPredicate("email", FilterOperator.EQUAL, email);
+		Query q = new Query(DatastoreManager.PATIENT_MODEL_STRING).setFilter(filter);
+		PreparedQuery pq = datastore.prepare(q);
+		for (Entity result : pq.asIterable()) {
+			return new Patient(result);
+		}
+		return null;
+	}	
+	
+
+	
+	// check if already added
+	public static int addPatientCaretaker(String keyString, String patientEmail) {
+		
+		Patient patient = DatastoreManager.getPatientByEmail(patientEmail);
+		if (patient == null) {
+			return DatastoreManager.PATIENT_NOT_FOUND;
+		}
+		
+		Caretaker caretaker = DatastoreManager.getCaretaker(keyString);
+		if (caretaker == null) {
+			return DatastoreManager.CARETAKER_NOT_FOUND;
+		}
+		
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Entity entity = new Entity(DatastoreManager.PATIENT_CARETAKER_MODEL_STRING);
+		entity.setProperty("patient-key", patient.getID());
+		entity.setProperty("caretaker-key", caretaker.getID());
+		datastore.put(entity);
+		
+		return DatastoreManager.PATIENT_CARETAKER_ADDED;
+	}
+	
+	public static List<PatientModel> getPatientsByCaretaker(String caretakerKey) {
+		List<PatientModel> list = new ArrayList<PatientModel>();
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter filter = new FilterPredicate("caretaker-key", FilterOperator.EQUAL, caretakerKey);
+		Query q = new Query(DatastoreManager.PATIENT_CARETAKER_MODEL_STRING).setFilter(filter);
+		PreparedQuery pq = datastore.prepare(q);
+		for (Entity result : pq.asIterable()) {
+			list.add(new PatientModel(DatastoreManager.getPatient(new PatientCaretaker(result).getPatientKey())));
+		}
+		return list;		
+	}
+	
 }

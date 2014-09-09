@@ -1,4 +1,3 @@
-callbackHooks = [];
 
 var LocationService = (function (){
     
@@ -36,7 +35,7 @@ var LocationService = (function (){
             longitude = null;
         }
 
-        intel.xdk.geolocation.getCurrentPosition(suc,fail);        
+        navigator.geolocation.getCurrentPosition(suc,fail);        
     };
     
 

@@ -1,0 +1,185 @@
+{
+  "extends" : "thirdParty.api",
+  "abstract" : false,
+  "root" : "https://inb372-team-alpha.appspot.com/_ah/api",
+  "name" : "caretaker",
+  "version" : "v1",
+  "defaultVersion" : false,
+  "adapter" : {
+    "bns" : "https://inb372-team-alpha.appspot.com/_ah/spi",
+    "deadline" : 65.0,
+    "type" : "lily"
+  },
+  "auth" : {
+    "allowCookieAuth" : false
+  },
+  "frontendLimits" : {
+    "unregisteredUserQps" : -1,
+    "unregisteredQps" : -1,
+    "unregisteredDaily" : -1,
+    "rules" : [ ]
+  },
+  "cacheControl" : {
+    "type" : "no-cache",
+    "maxAge" : 0
+  },
+  "methods" : {
+    "caretaker.add" : {
+      "path" : "caretaker",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.teamalpha.endpoint.CaretakerServiceAPI.addCaretaker",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "caretaker.get" : {
+      "path" : "caretaker/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.teamalpha.endpoint.CaretakerServiceAPI.getCaretaker",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "caretaker.update" : {
+      "path" : "caretaker/{id}",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.teamalpha.endpoint.CaretakerServiceAPI.updateCaretaker",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "caretaker.list" : {
+      "path" : "caretaker",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.teamalpha.endpoint.CaretakerServiceAPI.getAllCaretaker",
+      "request" : {
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    }
+  },
+  "descriptor" : {
+    "schemas" : {
+      "CaretakerModel" : {
+        "id" : "CaretakerModel",
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "address" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phoneNumber" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "AddResourceModel" : {
+        "id" : "AddResourceModel",
+        "type" : "object",
+        "properties" : {
+          "success" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      },
+      "CaretakerModelCollection" : {
+        "id" : "CaretakerModelCollection",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "CaretakerModel"
+            }
+          }
+        }
+      }
+    },
+    "methods" : {
+      "com.teamalpha.endpoint.CaretakerServiceAPI.addCaretaker" : {
+        "request" : {
+          "$ref" : "CaretakerModel"
+        },
+        "response" : {
+          "$ref" : "AddResourceModel"
+        }
+      },
+      "com.teamalpha.endpoint.CaretakerServiceAPI.getCaretaker" : {
+        "response" : {
+          "$ref" : "CaretakerModel"
+        }
+      },
+      "com.teamalpha.endpoint.CaretakerServiceAPI.updateCaretaker" : {
+        "request" : {
+          "$ref" : "CaretakerModel"
+        },
+        "response" : {
+          "$ref" : "CaretakerModel"
+        }
+      },
+      "com.teamalpha.endpoint.CaretakerServiceAPI.getAllCaretaker" : {
+        "response" : {
+          "$ref" : "CaretakerModelCollection"
+        }
+      }
+    }
+  }
+}

@@ -1,56 +1,91 @@
+<%@ page import = "com.teamalpha.datastore.*,java.util.*,com.teamalpha.model.*" %>
 
+<%
+
+
+String userid = (String)session.getAttribute("userid");
+
+if ((String)request.getParameter("add") != null) {
+
+	String email = (String)request.getParameter("add");
+	int rv = DatastoreManager.addPatientCaretaker(userid, email);
+}
+
+Caretaker caretaker = DatastoreManager.getCaretaker(userid);
+
+
+%>
 
 <%@ include file="/inc/session.jsp"%>
 <jsp:include page="/inc/header.jsp" /> 
 <div class="container">
-
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-      
-      
-      <div class="row">
-      <div class="col-md-2">	      
-	      	<jsp:include page="/inc/myMenu.jsp" />		  
-      </div>
-      <div class="col-md-10">
-	      <h2>Patient List</h2>
-	      <br/>
-	      <div class="panel panel-primary">
-	      <!-- Default panel contents -->
-	      <div class="panel-heading">Total : 2</div>
-
-	      <!-- Table -->
-	      <table class="table table-striped">
-	        <tr>
-	        	<td><strong>#</strong></td>
-	        	<td><strong>Patient Name</strong></td>
-	        	<td><strong>Date</strong></td>
-	        	<td><strong>Service</strong></td>
-	        </tr>
-	        <tr>
-	        	<td>2</td>
-	        	<td>Jane</td>
-	        	<td>11/08/2014</td>
-	        	<td>Not Active</td>
-	        </tr>
-	        <tr>
-		    	<td>1</td>
-		    	<td>Tom</td>
-		    	<td>18/06/2014</td>
-		    	<td>Active</td>
-		    </tr>
-	      </table>
-
+     
+	<div class="row">
+		<div class="col-md-3">
+		    <div class="col-md-12">
+		    	<div class="panel panel-default">
+	  				<div class="panel-heading">Add Patient</div>
+	  				<div class="panel-body">
+	  					<form method="get" action="/patient/patientList.jsp" role="form">
+	    					<div class="input-group">
+	  							<span class="input-group-addon">@</span>
+	  							<input type="text" class="form-control" name="add" placeholder="Patient Email">
+							</div>
+							<br/>
+							<button type="submit">Add</button>
+						</form>
+	  				</div>
+				</div>
+		    </div>
+		    
+			<div class="col-md-12">
+		    	<div class="panel panel-default">
+	  				<div class="panel-heading">FindPatient</div>
+	  				<div class="panel-body">
+	  					<form method="get" action="/patient/patientList.jsp" role="form">
+	    					<div class="input-group">
+	  							<span class="input-group-addon">@</span>
+	  							<input type="text" class="form-control" name="add" placeholder="Patient Email">
+							</div>
+							<br/>
+							<button type="submit">Find</button>
+						</form>
+	  				</div>
+				</div>
+		    </div>	    
+	    
 	    </div>
-	        
-	        
-      </div>
-    </div>
 
-      
-        
-    </div>
+	    
+	    <div class="col-md-9">
+	      	<div class="panel panel-primary">
+	      		<!-- Default panel contents -->
+	      		
 
-    </div> <!-- /container -->
+	      		<!-- Table -->
+	      		<table class="table table-striped">
+	        		<tr>
+	        			<td><strong>Name</strong></td>
+	        			<td><strong>Address</strong></td>
+	        			<td><strong></strong></td>
+	        		</tr>
+	        		<%
+	        			for (PatientModel p : caretaker.getPatients()) {
+	        			%>
+	        				<tr>
+	        					<td><%=p.getName()%></td>
+	        					<td><%=p.getAddress()%></td>
+	        					<td><a class="btn" href="/map.jsp?patient=<%=p.getId()%>">View Map</a></td>
+	        				</tr>
+	        			<%
+	        			}
+	        		%>
+	        		
+	        		
+	      		</table>
+	      	</div>
+	    </div>
+	</div>
+ </div> <!-- /container -->
     
 <jsp:include page="/inc/footer.jsp" /> 

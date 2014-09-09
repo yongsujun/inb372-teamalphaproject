@@ -3,13 +3,12 @@ package com.teamalpha.datastore;
 import com.google.appengine.api.datastore.*;
 
 import java.util.ArrayList;
-
 import com.teamalpha.model.PatientModel;
 import com.teamalpha.datastore.Caretaker;
 
 public class Patient extends EntityWrapper {
 
-	private ArrayList<String> caretakers = new ArrayList<String>();;
+
 
 	public Patient() {
 		super();
@@ -39,42 +38,25 @@ public class Patient extends EntityWrapper {
 		return super.keyString();
 	}
 
-	public String getLocation() {
-		return (String) super.get("location");
+	public GeoPt getLocation() {
+		return (GeoPt) super.get("location");
 	}
 
 	public void setLocation(GeoPt value) {
-		super.set("location", value.toString());
+		super.set("location", value);
 	}
 
-	public ArrayList<String> getCaretakers() {
-		return (ArrayList<String>) super.get("caretakers");
+
+	
+	public void setEmail(String email) {
+		super.set("email", email);
+	}
+	
+	public String getEmail() {
+		return (String) super.get("email");
 	}
 
-	private void setCaretakers() {
-		super.set("caretakers", this.caretakers);
-	}
 
-	public void addCaretaker(Caretaker carer) {
-		this.caretakers = getCaretakers();
-		if (caretakers == null) {
-			caretakers = new ArrayList<String>();
-		}
-		if (!(caretakers.contains(carer.getID()))) {
-			caretakers.add(carer.getID());
-			// need a way to ensure that data matches caretaker's patients
-		}
-		setCaretakers();
-	}
-
-	public void removeCaretaker(Caretaker carer) {
-		this.caretakers = getCaretakers();
-		if (!(caretakers == null)) {
-			caretakers.remove(carer.getID());
-			// need a way to ensure that data matches caretaker's patients
-		}
-
-	}
 
 	public PatientModel getModel() {
 		return new PatientModel(this);
@@ -87,10 +69,10 @@ public class Patient extends EntityWrapper {
 		if (model.getAddress() != null) {
 			this.setAddress(model.getAddress());
 		}
-		if (model.getCaretakers() != null) {
-			this.caretakers.addAll(model.getCaretakers());
-			this.setCaretakers();
+		if (model.getEmail() != null) {
+			this.setEmail(model.getEmail());
 		}
+		
 	}
 
 }

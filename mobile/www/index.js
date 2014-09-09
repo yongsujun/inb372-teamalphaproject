@@ -1,7 +1,29 @@
-function updateLocation() {
-     LocationService.updateLocation();
-    $("#main-page-footer-location").text(LocationService.getLatitude() + " " + LocationService.getLongitude());
+function updateLocation() { 
+    LocationService.updateLocation();
+    
+    var latitude = LocationService.getLatitude();
+    var longitude = LocationService.getLongitude();
+    
+
+    var geocoder = new google.maps.Geocoder();
+    var latLng = new google.maps.LatLng(latitude, longitude);
+    
+    
+    AppEngineEndpoints.updateLocation(AppSettings.getUserID(), latitude, longitude);
+    
+    geocoder.geocode( { 'latLng': latLng}, function(results, status) {
+
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+            
+                $("#main-page-footer-location").text(results[1].address_components[1].short_name + ", " + results[1].address_components[2].short_name );
+                
+            }      
+        }
+    });
 }
+                                 
+
 
 function changePage(page) {
     $(":mobile-pagecontainer").pagecontainer("change", "#" + page, { reverse: false});     
@@ -9,7 +31,7 @@ function changePage(page) {
 
 $(document).ready(function() {
     
-
+    
     window.setInterval(updateLocation, 2000);
 
     if (!AppSettings.hasUserID()) {
@@ -21,35 +43,3 @@ $(document).ready(function() {
     
 });
 
-$( document ).ready( function() {
-    
-   // $( "#popupMap iframe" )
-   //     .attr( "width", 0 )
-    //    .attr( "height", 0 );
-		  
-  ///  $( "#popupMap iframe" ).contents().find( "#map_canvas" )
-  ///      .css( { "width" : 0, "height" : 0 } );
-	 	     
- /*   $( "#popupMap" ).on({
-        popupbeforeposition: function() {
-        //    var size = scale( 480, 320, 0, 1 ),
-       //         w = size.width,
-         //       h = size.height;
-
-          //  $( "#popupMap iframe" )
-         //       .attr( "width", w - 100 )
-          //      .attr( "height", h + 200 );
-					 
-         //   $( "#popupMap iframe" ).contents().find( "#map_canvas" )
-          //      .css( { "width": w - 100, "height" : h + 200} );
-        },
-        popupafterclose: function() {
-            $( "#popupMap iframe" )
-                .attr( "width", 0 )
-                .attr( "height", 0 );
-					 
-            $( "#popupMap iframe" ).contents().find( "#map_canvas" )
-                .css( { "width": 0, "height" : 0 } );
-        }
-    }); */
-});

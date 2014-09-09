@@ -8,7 +8,7 @@ import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.response.NotFoundException;
 
-@Api(name="Caretaker", version="v1")
+@Api(name="caretaker", version="v1")
 public class CaretakerServiceAPI {
 	
 	@ApiMethod(name="add", path="caretaker", httpMethod = HttpMethod.POST)

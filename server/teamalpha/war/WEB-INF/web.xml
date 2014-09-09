@@ -8,7 +8,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value>com.teamalpha.endpoint.CaretakerServiceAPI,com.teamalpha.endpoint.PatientServiceAPI</param-value>
+   <param-value>com.teamalpha.endpoint.CaretakerServiceAPI,com.teamalpha.endpoint.LocationServiceAPI,com.teamalpha.endpoint.PatientServiceAPI</param-value>
   </init-param>
  </servlet>
  <servlet-mapping>

@@ -86,6 +86,10 @@ var AppSettings = (function() {
         localStorage.removeItem("patient_info");
     };
     
+    AppSettings.ApiKey = function() {
+        return "AIzaSyBaNVkn7imK_26xCHndw7igaTusw7OlYFs";    
+    };
+    
     
     
     return AppSettings;

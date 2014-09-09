@@ -22,9 +22,13 @@
 		document.addEventListener("intel.xdk.device.ready",onDeviceReady,false);
 	</script>
     
+    <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
     
     <script src="lib/jquery/jquery-2.1.1.min.js"></script>
+    
     <link rel="stylesheet" href="lib/jquery-mobile/jquery.mobile-1.4.3.css"/>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css"/>
+    
     <script src="lib/jquery-mobile/jquery.mobile-1.4.3.min.js"></script>
     
     <link rel="stylesheet" href="index.css"/>
@@ -52,25 +56,48 @@
     </div>
     <div data-role="page" id="enter-id">
         <div class="center-div">
-        <span class="important-msg">
-            <h2>Please enter patient ID</h2>   
-        </span>
-        <input id="enter-id-id" type="text"/>
-        <button id="enter-id-continue">Continue</button></div>
+            <span class="important-msg">
+                <h2>Please enter patient ID</h2>   
+            </span>
+            <input id="enter-id-id" type="text"/>
+            <button id="enter-id-continue">Continue</button>
+        </div>
+        <div id="enter-id-load-div">
+            <img src="img/load.gif"/>
+            <span>Loading</span>
+        </div>
     </div>
     <div data-role="page" id="main-page">
 	   <div data-role="header">
-           <h1></h1>
-            <a data-icon="gear" class="ui-btn-right" id="main-page-settings">Settings</a>
+        <h5>5:30</h5>
+           <a data-icon="gear" class="ui-btn-right" id="main-page-settings">Settings</a>
         </div>
       
-        <div data-role="popup" id="popupBasic" style="display: inline-block;">
+        <div data-role="popup" id="popupBasic" >
 	       <iframe src="map.html" ></iframe>
-            <!--sdfsd
-            <div id="map_canvas"></div>-->
         </div>
         
+        <div data-role="popup" id="main-page-message-popup" not-code="" class="main-page-popup">
+            <input type="checkbox" id="main-page-message-popup-remove"/><span id="main-page-message-popup-remove-txt">Remove Notification</span>
+            <img id="main-page-message-popup-close" src="img/close.png" height="24"/>
+            <br/><hr/>
+            <span id="main-page-message-popup-from"></span>
+            <span id="main-page-message-popup-msg"></span>
+            <button id="main-page-message-popup-send" class="ui-btn"></button>
+            <input id="main-page-message-popup-reply" type="text"/>
+            
+        </div>
         
+        <ul id="main-page-notification-list">
+            <li class="alert alert-info medical-notification"><strong>Medical Reminder!</strong></li>
+            <li class="alert alert-warning message-notification" not-code="a" from="Andrew" message="Go see Dr Tim"><strong>New Message!</strong> from Andrew</li>
+            <li class="alert alert-danger alert-notification"><strong>IMPORTANT ALERT</strong></li>
+        </ul>
+        
+        <button id="main-page-send-alert">Send Alert</button>
+        <a href="#info-page"><button id="main-page-view-info">My Info</button></a>
+        <button id="main-page-caretakers">Caretakers</button>
+    
         <div data-role="footer">
             <span class="main-page-footer-item-left">
                 Location: 
@@ -87,10 +114,48 @@
             <a id="settings-page-save" class="ui-btn-right">Save</a>
         </div>  
         <div>
-            <label>ID <span class="input-feedback" id="settings-page-id-feedback"></span></label><input id="settings-page-id" type="text"/>
+            <label><b>ID</b><span class="input-feedback" id="settings-page-id-feedback"></span></label><input id="settings-page-id" type="text"/>
         </div>
         <div data-role="footer" id="settings-page-footer">
             <button id="settings-page-reset">Reset Settings</button>
+        </div>
+    </div>
+    <div data-role="page" id="info-page">
+	   <div data-role="header">
+           <h1>My Info</h1>
+            <a href="#main-page" data-icon="back" class="ui-btn-left">Back</a>
+            <!--<a id="settings-page-save" class="ui-btn-right">Save</a>-->
+        </div>  
+        
+
+        <div data-role="tabs">
+            <div data-role="navbar">
+                <ul>
+                    <li><a href="#personal">Personal</a></li>
+                    <li><a href="#medical">Medical</a></li>
+                </ul>
+            </div>
+            <div id="personal">
+                <table id="info-page-info-table">
+                    <tr>
+                        <td class="info-txt">Name</td>
+                        <td id="info-page-p-name">John Doe</td>
+                    </tr>
+                    <tr>
+                        <td class="info-txt">Address</td>
+                        <td id="info-page-p-address">1 Ann Street Brisbane sfd sdf sd fsd f sdf sd fsd f</td>
+                    </tr>
+                    <tr>
+                        <td class="info-txt">Email</td>
+                        <td id="info-page-p-email">john@gmail.com</td>
+                    </tr>
+                </table>
+                
+                <button>View Caretakers</button>
+            </div>
+            <div id="medical">
+                <p>This is the content of the tab 'Two', with the id fragment-2.</p>
+            </div>
         </div>
     </div>
 </body>

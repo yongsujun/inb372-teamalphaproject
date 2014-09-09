@@ -1,6 +1,7 @@
 var AppEngineEndpoints = (function() {
     
-    var ROOT = 'https://inb372-team-alpha.appspot.com/_ah/api';
+   // var ROOT = 'https://inb372-team-alpha.appspot.com/_ah/api';
+    var ROOT = "http://localhost:8888/_ah/api";
     var hasLoadedPatientApi = false;
     function AppEngineEndpoints() {
         
@@ -15,6 +16,20 @@ var AppEngineEndpoints = (function() {
             });            
         }, ROOT);
 
+    };
+    
+    AppEngineEndpoints.updateLocation = function(id, latitude, longitude) {
+        var content = {
+            "id": id,
+            "latitude": latitude,
+            "longitude": longitude
+        };
+        
+        gapi.client.load("location", "v1", function() {
+            gapi.client.location.update(content).execute(function(response) {
+                console.log(response);
+            }); 
+        }, ROOT);
     };
     
     return AppEngineEndpoints;

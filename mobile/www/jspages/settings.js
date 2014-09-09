@@ -13,6 +13,7 @@ $(document).ready(function() {
     
     $("#settings-page-reset").click(function() {
         AppSettings.reset(); 
+        $("#settings-page-id").val("");
         changePage("enter-id");
     });
 });

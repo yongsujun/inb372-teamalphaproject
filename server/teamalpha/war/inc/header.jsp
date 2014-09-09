@@ -33,15 +33,10 @@
           <ul class="nav navbar-nav">
             <li><a href="/index.jsp">Home</a></li>
             <li><a href="/about.jsp">About</a></li>
-            
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Pages <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="/myAccount/accountView.jsp">My Account</a></li>
-                <li><a href="/patient/patientList.jsp">Patient List</a></li>
-                
-              </ul>
-            </li>
+            <li><a href="/myAccount/accountView.jsp">My Account</a></li>
+            <li><a href="/patient/patientList.jsp">Patients</a></li>
+            <li><a href="/map.jsp">Map</a></li>
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <%if((String)session.getAttribute("userid") == null || (String)session.getAttribute("userid") == ""){%>

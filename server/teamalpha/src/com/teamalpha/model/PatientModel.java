@@ -8,9 +8,10 @@ public class PatientModel {
 	String id;
 	String name;
 	String address;
-	String location;
-	ArrayList<String> caretakers = new ArrayList<String>();
-
+	GeoPt location;
+	String email;
+	
+	
 	public PatientModel() {
 
 	}
@@ -20,7 +21,8 @@ public class PatientModel {
 		this.name = patient.getName();
 		this.address = patient.getAddress();
 		this.location = patient.getLocation();
-		this.caretakers.addAll(patient.getCaretakers());
+		this.email = patient.getEmail();
+
 	}
 
 	public String getId() {
@@ -43,20 +45,22 @@ public class PatientModel {
 		this.address = address;
 	}
 
-	public String getLocation() {
+	public GeoPt getLocation() {
 		return location;
 	}
 
 	public void setLocation(GeoPt location) {
-		this.location = location.toString();
+		this.location = location;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getEmail() {
+		return this.email;
 	}
 
-	public ArrayList<String> getCaretakers() {
-		return caretakers;
-	}
-
-	public void setCaretakers(ArrayList<String> caretakers) {
-		this.caretakers = caretakers;
-	}
+	
 
 }

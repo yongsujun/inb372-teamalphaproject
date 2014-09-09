@@ -20,6 +20,10 @@ public abstract class EntityWrapper {
             this.entity.setProperty(property, value);
     }
     
+    protected void set(String property, long value) {
+    	this.entity.setProperty(property, value);
+    }
+    
     protected void set(String property, GeoPt value) {
             this.entity.setProperty(property, value);
     }
@@ -33,12 +37,12 @@ public abstract class EntityWrapper {
     }
    
     public void commit() {
-            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-            datastore.put(this.entity);
+    	DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(this.entity);
     }
    
     public String keyString() {
-            return KeyFactory.keyToString(this.entity.getKey());
+    	return KeyFactory.keyToString(this.entity.getKey());
     }
    
     

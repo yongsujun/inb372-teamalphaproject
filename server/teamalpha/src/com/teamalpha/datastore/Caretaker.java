@@ -3,13 +3,13 @@ package com.teamalpha.datastore;
 import com.google.appengine.api.datastore.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.teamalpha.model.CaretakerModel;
+import com.teamalpha.model.PatientModel;
 import com.teamalpha.datastore.Patient;
 
 public class Caretaker extends EntityWrapper {
-
-	private ArrayList<String> patients = new ArrayList<String>();
 
 	public Caretaker() {
 		super();
@@ -32,6 +32,7 @@ public class Caretaker extends EntityWrapper {
 	}
 
 	public void setAddress(String value) {
+		
 		super.set("address", value);
 	}
 
@@ -54,36 +55,19 @@ public class Caretaker extends EntityWrapper {
 	public void setEmail(String value) {
 		super.set("email", value);
 	}
-
-	public ArrayList<String> getPatients() {
-		return (ArrayList<String>) super.get("patients");
+	
+	public String getPassword() {
+		return (String) super.get("password");
+	}
+	
+	public void setPassword(String value) {
+		super.set("password", value);
+	}
+	
+	public List<PatientModel> getPatients() {
+		return DatastoreManager.getPatientsByCaretaker(this.getID());
 	}
 
-	private void setPatients() {
-		super.set("patients", this.patients);
-	}
-
-	public void addPatient(Patient patient) {
-
-		this.patients = getPatients();
-		if (patients == null) {
-			patients = new ArrayList<String>();
-		}
-		if (!(patients.contains(patient.getID()))) {
-			patients.add(patient.getID());
-			// need to ensure data is matched for patient's caretakers
-		}
-		setPatients();
-	}
-
-	public void removePatient(Patient patient) {
-		this.patients = getPatients();
-		if (!(patients == null)) {
-			patients.remove(patient.getID());
-			// need ensure data is matched for patient's caretakers
-		}
-		setPatients();
-	}
 
 	public CaretakerModel getModel() {
 		return new CaretakerModel(this);
@@ -102,10 +86,10 @@ public class Caretaker extends EntityWrapper {
 		if (model.getEmail() != null) {
 			this.setEmail(model.getEmail());
 		}
-		if (model.getPatients() != null) {
-			this.patients.addAll(model.getPatients());
-			this.setPatients();
+		if (model.getPassword() != null) {
+			this.setPassword(model.getPassword());
 		}
+
 	}
 
 }

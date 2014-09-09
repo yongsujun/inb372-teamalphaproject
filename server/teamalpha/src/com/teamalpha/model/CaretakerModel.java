@@ -10,7 +10,8 @@ public class CaretakerModel {
 	String address;
 	String email;
 	String phoneNumber;
-	ArrayList<String> patients = new ArrayList<String>();
+	String password;
+	//ArrayList<String> patients = new ArrayList<String>();
 	
 	public CaretakerModel() {
 		
@@ -22,7 +23,8 @@ public class CaretakerModel {
 		this.address = caretaker.getAddress();
 		this.email = caretaker.getEmail();
 		this.phoneNumber = caretaker.getPhoneNumber();
-		this.patients.addAll(caretaker.getPatients());
+		this.password = caretaker.getPassword();
+	//	this.patients.addAll(caretaker.getPatients());
 		
 	}
 
@@ -62,6 +64,15 @@ public class CaretakerModel {
 		this.email = email;
 	}
 	
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public void setPassword(String passwd) {
+		this.password = passwd;
+	}
+	
+	/*
 	public ArrayList<String> getPatients() {
 		return patients;
 	}
@@ -69,6 +80,6 @@ public class CaretakerModel {
 	public void setPatients(ArrayList<String> patients) {
 		this.patients = patients;
 	}
-	
+	*/
 	
 }

@@ -63,12 +63,7 @@ public class PatientTests {
 		assertEquals(null, testInstance.getLocation());
 	}
 	
-	@Test
-	public void test_GetCaretakers_InitiallyNoCaretakers() {
-		testInstance.commit();
-		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(null, storedTestInstance.getCaretakers());
-	}
+
 	
 	@Test
 	public void test_SetNameCorrectly() {
@@ -95,28 +90,9 @@ public class PatientTests {
 		assertEquals(expected, storedTestInstance.getLocation());
 	}
 	
-	@Test
-	public void test_AddCaretaker_OneCaretaker() {
-		caretaker = DatastoreManager.createCaretaker();
-		testInstance.addCaretaker(caretaker);
-		testInstance.commit();
-		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(1, storedTestInstance.getCaretakers().size());
-	}
+
 	
-	@Test
-	public void test_RemoveCaretaker_OnlyCaretakerRemoved() {
-		caretaker = DatastoreManager.createCaretaker();
-		caretaker.commit();
-		testInstance.addCaretaker(caretaker);
-		testInstance.commit();
-		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(1, storedTestInstance.getCaretakers().size());
-		testInstance.removeCaretaker(caretaker);
-		testInstance.commit();
-		storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(null, storedTestInstance.getCaretakers());
-	}
+
 	
 	// helper method to commit two caretakers to the datastore
 	private List<Caretaker> addTwoCaretakers() {
@@ -126,27 +102,9 @@ public class PatientTests {
 		return caretakers;
 	}
 	
-	@Test
-	public void test_AddCaretaker_MultipleCaretakers() {
-		List<Caretaker> caretakers = addTwoCaretakers();
-		testInstance.addCaretaker(caretakers.get(0));
-		testInstance.addCaretaker(caretakers.get(1));
-		testInstance.commit();
-		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(2, storedTestInstance.getCaretakers().size());
-	}
+
 	
-	@Test
-	public void test_RemoveCaretaker_OneCaretakerFromTwo() {
-		List<Caretaker> caretakers = addTwoCaretakers();
-		testInstance.addCaretaker(caretakers.get(0));
-		testInstance.addCaretaker(caretakers.get(1));
-		testInstance.commit();
-		testInstance.removeCaretaker(caretakers.get(0));
-		testInstance.commit();
-		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(1, storedTestInstance.getCaretakers().size());
-	}
+
 	
 	// helper method to commit two patients to the datastore
 	private List<Patient> commitTwoPatients() {
