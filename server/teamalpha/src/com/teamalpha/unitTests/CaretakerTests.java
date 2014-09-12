@@ -21,9 +21,9 @@ public class CaretakerTests {
 	private final String CARETAKER_ADDRESS = "123 Fake St.";
 	private final String CARETAKER_PHONENUMBER = "12345678";
 	private final String CARETAKER_EMAIL = "alice.caretaker@email.com";
+	private final String CARETAKER_PASSWORD = "AwesomePassword1";
 
 	private Caretaker testInstance;
-	private Patient testPatient;
 
 	@Before
 	public void setUp() throws Exception {
@@ -35,7 +35,7 @@ public class CaretakerTests {
 	public void tearDown() throws Exception {
 		helper.tearDown();
 	}
-
+	
 	@Test
 	public void test_GetID_InitialisedCorrectly() {
 		testInstance.commit();
@@ -62,6 +62,11 @@ public class CaretakerTests {
 	@Test
 	public void test_GetEmail_InitiallyNull() {
 		assertEquals(null, testInstance.getEmail());
+	}
+	
+	@Test
+	public void test_GetPassword_InitiallyNull() {
+		assertEquals(null, testInstance.getPassword());
 	}
 
 	@Test
@@ -104,24 +109,14 @@ public class CaretakerTests {
 				.getCaretaker(testInstance.getID());
 		assertEquals(CARETAKER_EMAIL, storedTestInstance.getEmail());
 	}
-
-
-
-
-
-
-
-	// helper method to commit two patients to the datastore
-	private List<Patient> addTwoPatients() {
-		DatastoreManager.createPatient();
-		DatastoreManager.createPatient();
-		List<Patient> patients = DatastoreManager.getAllPatients();
-		return patients;
+	
+	@Test
+	public void test_SetPassword_CorrectlySet() {
+		testInstance.setPassword(CARETAKER_PASSWORD);
+		testInstance.commit();
+		Caretaker storedTestInstance = DatastoreManager.getCaretaker(testInstance.getID());
+		assertEquals(CARETAKER_PASSWORD, storedTestInstance.getPassword());
 	}
-
-
-
-
 
 	// helper method to commit two caretakers to the datastore
 	private List<Caretaker> commitTwoCaretakers() {
