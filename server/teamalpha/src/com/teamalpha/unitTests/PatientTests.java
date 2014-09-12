@@ -17,15 +17,25 @@ public class PatientTests {
 	
 	private final LocalServiceTestHelper helper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
 	
+	private final float MAX_ABSOLUTE_LATITUDE = (float) 90;
+	private final float MAX_ABSOLUTE_LONGITUDE = (float) 180;
+	
+	private final float SMALL_INCREASE = (float) 0.01;
+	
 	private final float MIDDLE_LATITUDE = (float) 0.0;
 	private final float MIDDLE_LONGITUDE = (float) 0.0;
 	
 	private final String PATIENT_NAME = "Joe Bloggs";
 	private final String PATIENT_ADDRESS = "123 Fake St, Fakeville";
 	private final GeoPt PATIENT_LOCATION = new GeoPt(MIDDLE_LATITUDE, MIDDLE_LONGITUDE);
+	private final String PATIENT_EMAIL = "joe.bloggs@email.com";
 	private final String PATIENT_NAME_SECOND = "Bob Brown";
 	
-	private Caretaker caretaker;
+	private final GeoPt VF_POINT_ONE = new GeoPt(-45, 90);
+	private final GeoPt VF_POINT_TWO = new GeoPt(45, 90);
+	private final GeoPt VF_POINT_THREE = new GeoPt(45, -90);
+	private final GeoPt VF_POINT_FOUR = new GeoPt(-45, -90);
+	
 	private Patient testInstance;
 	private String testPatientKey;
 	
@@ -63,7 +73,60 @@ public class PatientTests {
 		assertEquals(null, testInstance.getLocation());
 	}
 	
-
+	@Test
+	public void test_GetEmail_InitiallyNull() {
+		assertEquals(null, testInstance.getEmail());
+	}
+	
+	// tests for points of virtual fence
+	@Test
+	public void test_GetPoint_AllInitiallyNull() {
+		assertEquals(null, testInstance.getPointOne());
+		assertEquals(null, testInstance.getPointTwo());
+		assertEquals(null, testInstance.getPointThree());
+		assertEquals(null, testInstance.getPointFour());
+	}
+	
+	// note tests below for setLocation test boundary constraints on GeoPt so not needed to test here as well
+	@Test
+	public void test_SetPointOne_CorrectlySet() {
+		testInstance.setPointOne(VF_POINT_ONE);
+		testInstance.commit();
+		assertEquals(VF_POINT_ONE, testInstance.getPointOne());
+		assertEquals(null, testInstance.getPointTwo());
+		assertEquals(null, testInstance.getPointThree());
+		assertEquals(null, testInstance.getPointFour());
+	}
+	
+	@Test
+	public void test_SetPointTwo_CorrectlySet() {
+		testInstance.setPointTwo(VF_POINT_TWO);
+		testInstance.commit();
+		assertEquals(null, testInstance.getPointOne());
+		assertEquals(VF_POINT_TWO, testInstance.getPointTwo());
+		assertEquals(null, testInstance.getPointThree());
+		assertEquals(null, testInstance.getPointFour());
+	}
+	
+	@Test
+	public void test_SetPointThree_CorrectlySet() {
+		testInstance.setPointThree(VF_POINT_THREE);
+		testInstance.commit();
+		assertEquals(null, testInstance.getPointOne());
+		assertEquals(null, testInstance.getPointTwo());
+		assertEquals(VF_POINT_THREE, testInstance.getPointThree());
+		assertEquals(null, testInstance.getPointFour());
+	}
+	
+	@Test
+	public void test_SetPointFour_CorrectlySet() {
+		testInstance.setPointFour(VF_POINT_FOUR);
+		testInstance.commit();
+		assertEquals(null, testInstance.getPointOne());
+		assertEquals(null, testInstance.getPointTwo());
+		assertEquals(null, testInstance.getPointThree());
+		assertEquals(VF_POINT_FOUR, testInstance.getPointFour());
+	}
 	
 	@Test
 	public void test_SetNameCorrectly() {
@@ -81,30 +144,59 @@ public class PatientTests {
 		assertEquals(PATIENT_ADDRESS, storedTestInstance.getAddress());
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void test_SetLocation_LatitudeAboveMax() {
+		testInstance.setLocation(new GeoPt(MAX_ABSOLUTE_LATITUDE + SMALL_INCREASE, MIDDLE_LONGITUDE));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void test_SetLocation_LatitudeBelowMin() {
+		testInstance.setLocation(new GeoPt(-(MAX_ABSOLUTE_LATITUDE + SMALL_INCREASE), MIDDLE_LONGITUDE));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void test_SetLocation_LongitudeAboveMax() {
+		testInstance.setLocation(new GeoPt(MIDDLE_LATITUDE, MAX_ABSOLUTE_LONGITUDE + SMALL_INCREASE));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void test_SetLocation_LongitudeBelowMin() {
+		testInstance.setLocation(new GeoPt(MIDDLE_LATITUDE, -(MAX_ABSOLUTE_LONGITUDE + SMALL_INCREASE)));
+	}
+	
+	@Test
+	public void test_SetLocation_MaxLatitudeLongitude() {
+		GeoPt maxPoint = new GeoPt(MAX_ABSOLUTE_LATITUDE, MAX_ABSOLUTE_LONGITUDE);
+		testInstance.setLocation(maxPoint);
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(maxPoint, storedTestInstance.getLocation());
+	}
+	
+	@Test
+	public void test_SetLocation_MinLatitudeLongitude() {
+		GeoPt minPoint = new GeoPt(-MAX_ABSOLUTE_LATITUDE, -MAX_ABSOLUTE_LONGITUDE);
+		testInstance.setLocation(minPoint);
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(minPoint, storedTestInstance.getLocation());	
+	}
+	
 	@Test
 	public void test_SetLocationCorrectly() {
-		String expected = PATIENT_LOCATION.toString();
 		testInstance.setLocation(PATIENT_LOCATION);
 		testInstance.commit();
 		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
-		assertEquals(expected, storedTestInstance.getLocation());
+		assertEquals(PATIENT_LOCATION, storedTestInstance.getLocation());
 	}
 	
-
-	
-
-	
-	// helper method to commit two caretakers to the datastore
-	private List<Caretaker> addTwoCaretakers() {
-		DatastoreManager.createCaretaker();
-		DatastoreManager.createCaretaker();
-		List<Caretaker> caretakers = DatastoreManager.getAllCaretakers();
-		return caretakers;
+	@Test
+	public void test_SetEmail_CorrectlySet() {
+		testInstance.setEmail(PATIENT_EMAIL);
+		testInstance.commit();
+		Patient storedTestInstance = DatastoreManager.getPatient(testInstance.getID());
+		assertEquals(PATIENT_EMAIL, storedTestInstance.getEmail());
 	}
-	
-
-	
-
 	
 	// helper method to commit two patients to the datastore
 	private List<Patient> commitTwoPatients() {
