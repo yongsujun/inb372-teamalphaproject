@@ -1,3 +1,5 @@
+<%@ include file="/inc/session.jsp"%>
+
 <%@ page import = "com.teamalpha.datastore.*,java.util.*,com.teamalpha.model.*" %>
 
 <%
@@ -16,7 +18,7 @@ Caretaker caretaker = DatastoreManager.getCaretaker(userid);
 
 %>
 
-<%@ include file="/inc/session.jsp"%>
+
 <jsp:include page="/inc/header.jsp" /> 
 <div class="container">
      

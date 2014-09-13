@@ -24,27 +24,6 @@
     "maxAge" : 0
   },
   "methods" : {
-    "location.get" : {
-      "path" : "locations/{id}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.teamalpha.endpoint.LocationServiceAPI.getLocation",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "location.update" : {
       "path" : "locations/{id}",
       "httpMethod" : "PUT",
@@ -62,6 +41,27 @@
         },
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "location.get" : {
+      "path" : "locations/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.teamalpha.endpoint.LocationServiceAPI.getLocation",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -86,15 +86,15 @@
       }
     },
     "methods" : {
-      "com.teamalpha.endpoint.LocationServiceAPI.getLocation" : {
-        "response" : {
-          "$ref" : "GeoPt"
-        }
-      },
       "com.teamalpha.endpoint.LocationServiceAPI.updateLocation" : {
         "request" : {
           "$ref" : "GeoPt"
         },
+        "response" : {
+          "$ref" : "GeoPt"
+        }
+      },
+      "com.teamalpha.endpoint.LocationServiceAPI.getLocation" : {
         "response" : {
           "$ref" : "GeoPt"
         }
