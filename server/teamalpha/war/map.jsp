@@ -11,8 +11,35 @@ String userid = "jane@mail.com";
 
 Caretaker caretaker = DatastoreManager.getCaretaker(userid);
 
-//String patientID = request.getParameter("patient");
-String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
+String patientID = request.getParameter("patient");
+String lng1="",lng2="",lng3="",lng4="";
+String lat1="",lat2="",lat3="",lat4="";
+Boolean fence = false;
+//String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
+if(patientID.equals("ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCQw")){
+	//No fence
+}else if(patientID.equals("ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw")){
+	lng1="-27.470506";
+	lat1="153.022556";
+	
+	lng2="-27.478273";
+	lat2="153.027534";
+	
+	lng3="-27.472448";
+	lat3="153.030581";
+	
+	lng4="-27.46845";
+	lat4="153.026977";
+	
+	
+	fence = true;
+	
+}else if(patientID.equals("ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCgw")){
+	
+	fence = false;
+
+}
+
 
 %>
 
@@ -34,6 +61,7 @@ String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
 	var map = null;
     var patientMarker = null;
     //-------------------------------------
+    var fenceMarker = null;
     var gmarkers = [];
     var points = [];
     var hullPoints = [];    
@@ -66,6 +94,10 @@ String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
         });
             
         setInterval(updatemap, 3500);
+        
+        
+        //check fence exist and setup
+        checkFence();
         //-------------------------------------------------------------------------
 //        google.maps.event.addListener(map, 'click', function() {
 //            infowindow.close();
@@ -105,7 +137,7 @@ String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
             google.maps.event.addListener(map, "click", function(evt) {
               if (evt.latLng) {
                 var latlng = evt.latLng;
-//                alert("latlng:"+latlng.toUrlValue());
+               // alert("latlng:"+latlng.toUrlValue());
                 var marker = createMarker(latlng, gmarkers.length-1);
                 points.push(latlng);
                 gmarkers.push(marker);
@@ -116,6 +148,39 @@ String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
           });
   //-----------------------------------------------------------------------------------------
        
+    }
+    
+    function checkFence(){
+    	if (<%=fence%> == true){
+    		
+//    		var p1 = <%=lng1%>+", "+<%=lat1%>;
+//    		var p2 = <%=lng2%>+", "+<%=lat2%>;
+//    		var p3 = <%=lng3%>+", "+<%=lat3%>;
+//    		var p4 = <%=lng4%>+", "+<%=lat4%>;
+    		//alert(p4);
+    		//fenceMarker = createMarker(<%=lng1%>+", "+<%=lat1%>, -1);
+//    		alert(<%=lng1%>+","+<%=lat1%>);
+//            points.push(<%=lng1%>+", "+<%=lat1%>);
+//            gmarkers.push(marker);
+//            calculateConvexHull();
+//            marker = createMarker(p2, 0);
+//            points.push(p2);
+//            gmarkers.push(marker);
+//            calculateConvexHull();
+//            marker = createMarker(p3, 1);
+//            points.push(p3);
+//            gmarkers.push(marker);
+//            calculateConvexHull();
+//            marker = createMarker(p4, 2);
+//            points.push(p4);
+//            gmarkers.push(marker);
+//            
+//    		calculateConvexHull();
+    	}else{
+    		alert("false");
+    	}
+    	
+    	
     }
   //****************************************************************************  
     function removeMarker(latlng) {
@@ -131,18 +196,22 @@ String patientID = "ahFpbmIzNzItdGVhbS1hbHBoYXIUCxIHUGF0aWVudBiAgICAgICwCAw";
  }
 
  function createMarker(latlng, marker_number) {
+	  
      var html = "marker "+marker_number;
      var marker = new google.maps.Marker({
          position: latlng,
          map: map,
          zIndex: Math.round(latlng.lat()*-100000)<<5
          });
-
+      //alert(latlng);
+	  //alert(marker_number);
      google.maps.event.addListener(marker, 'click', function() {
-         var contentString = html + "<br>"+marker.getPosition().toUrlValue()+"<br><a href='javascript:removeMarker(new google.maps.LatLng("+marker.getPosition().toUrlValue()+"));'>Remove Marker</a>";
+         var contentString = "<br>"+marker.getPosition().toUrlValue()+"<br><a href='javascript:removeMarker(new google.maps.LatLng("+marker.getPosition().toUrlValue()+"));'>Remove Marker</a>";
+         //var contentString = html + "<br>"+marker.getPosition().toUrlValue()+"<br><a href='javascript:removeMarker(new google.maps.LatLng("+marker.getPosition().toUrlValue()+"));'>Remove Marker</a>";
          infowindow.setContent(contentString); 
          infowindow.open(map,marker);
          });
+    
      return marker;
  }
   
